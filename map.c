@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/06/28 17:32:40 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:47:15 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**get_wholemap(t_game game)
 	char	**whole;
 	int		i;
 
-	whole = ft_calloc(game.rows, sizeof(char *));
+	whole = ft_calloc(game.rows + 1, sizeof(char *));
 	if (!whole)
 		return (NULL);
 	i = 0;
@@ -82,7 +82,6 @@ char	**get_wholemap(t_game game)
 	{
 		read = get_next_line(game.mapfd);
 		whole[i] = read;
-		free(read);
 		i++;
 	}
 	close(game.mapfd);
