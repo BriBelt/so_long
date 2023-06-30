@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/06/28 17:47:19 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:26:00 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,46 +20,63 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+# define OPEN_SPACE '0'
+# define WALL '1'
+# define PLAYER 'P'
+# define EXIT 'E'
+# define COLLECTIBLE 'C'
+# define IMG_SIZE 64
+
 typedef struct	s_pos
 {
 	int	x;
 	int	y;
 }		t_pos;
 
-typedef struct	s_game
+typedef struct	s_map
 {
-	/* Connection pointers */
-	void	*conn;
-	void	*win;
-	/* Graphics */
-	void	*player;
-	void	*collectible;
-	void	*exit;
-	void	*backg;
-	void	*wall;
-	/* Map */
-	int		mapfd;
 	char	*mapname;
+	int		mapfd;
 	char	**map;
-	/* Count */
 	int		rows;
 	int		cols;
+	int		collectibles;
+	int		exit;
+	int		player;
+	t_pos	player_pos;	
+}			t_map;
 
+typedef struct	s_tiles
+{
+	void	*floor;
+	void	*wall;
+	void	*exit;
+	void	*collectible;
+	void	*player;
+}			t_tiles;
+
+typedef struct	s_game
+{
+	void	*conn;
+	void	*win;
+	t_map	map;
+	t_tiles	tiles;
+	int		moves;
 }			t_game;
 
 void	so_long_exec(char **argv);
 /* Utils */
 //void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	map_format(t_game game);
+void	map_format(t_game *game);
 void	exit_error(char *err);
-//char	**get_map(int fd);
-//char	*get_wholemap(t_game game);
 /* Check */
-int		check_map(int *map);
+int		check_map(char **map);
+int		accepted_chars(char c);
 /* Map */
-int		n_rows(t_game game);
-int		n_cols(t_game game);
-char	**get_wholemap(t_game game);
+void	get_rows(t_game *game);
+void	get_cols(t_game *game);
+//int		n_rows(t_game game);
+//int		n_cols(t_game game);
 /* GNL */
 char		*get_next_line(int fd);
 char		*ft_strjoin(char *s1, char *s2);

@@ -6,26 +6,26 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/06/28 17:47:15 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:00:57 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	map_format(t_game game)
+void	map_format(t_game *game)
 {
 	int		len;
 	int		i;
 	char	*format;
 
-	len = ft_strlen(game.mapname) - 4;
+	len = ft_strlen(game->map.mapname) - 4;
 	i = 0;
 	if (len <= 0)
 		exit_error("Non-valid map\n");
 	format = ".ber";
-	while (game.mapname[len])
+	while (game->map.mapname[len])
 	{
-		if (game.mapname[len] == format[i])
+		if (game->map.mapname[len] == format[i])
 		{
 			len++;
 			i++;
@@ -35,7 +35,43 @@ void	map_format(t_game game)
 	}
 }
 
-int	n_rows(t_game game)
+void	get_rows(t_game *game)
+{
+	char	*read;
+	
+	game->map.mapfd = open(game->map.mapname, O_RDONLY);
+	read = get_next_line(game->map.mapfd);
+	game->map.rows = 0;
+	while (read)
+	{
+		free(read);
+		game->map.rows++;
+		read = get_next_line(game->map.mapfd);
+	}
+	close(game->map.mapfd);
+	if (game->map.rows == 0)
+		exit_error("Non-valid map\n");
+}
+
+void	get_cols(t_game *game)
+{
+	int		i;
+
+	game->map.mapfd = open(game->map.mapname, O_RDONLY);
+	game->map.map = malloc(sizeof(char *) * (game->map.rows + 1));
+	if (!game->map.map)
+		exit_error("Memory error");
+	i = 0;
+	while (i < game->map.rows)
+	{
+		game->map.map[i] = get_next_line(game->map.mapfd);
+		i++;
+	}
+	game->map.map[i] = NULL;
+	close(game->map.mapfd);
+}
+
+/*int	n_rows(t_game game)
 {
 	char	*read;
 	int		row;
@@ -65,46 +101,48 @@ int	n_cols(t_game game)
 	free(read);
 	close(game.mapfd);
 	return (col);
-}
-
-char	**get_wholemap(t_game game)
-{
-	char	*read;
-	char	**whole;
-	int		i;
-
-	whole = ft_calloc(game.rows + 1, sizeof(char *));
-	if (!whole)
-		return (NULL);
-	i = 0;
-	game.mapfd = open(game.mapname, O_RDONLY);
-	while (i < game.rows)
-	{
-		read = get_next_line(game.mapfd);
-		whole[i] = read;
-		i++;
-	}
-	close(game.mapfd);
-	return (whole);
-}
-
-/*char	*get_wholemap(t_game game)
-{
-	char	*tmprow;
-	char	*wholemap;
-
-	wholemap = NULL;
-	tmprow = NULL;
-	game.rows = 0;
-	while (1)
-	{
-		tmprow = get_next_line(game.mapfd);
-		if (tmprow == NULL)
-			break ;
-		wholemap = ft_strjoin(wholemap, tmprow);
-		game.rows++;
-		free(tmprow);
-	}
-	return (wholemap);
 }*/
 
+int	check_map(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j] && map[i][j] != '\n')
+		{
+			if (!accepted_chars(map[i][j]))
+				exit_error("Non-valid map\n");
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_borders(t_game *game)
+{
+	int	row;
+	int	col;
+
+	row = 0;
+	col = 0;
+}
+
+int	accepted_chars(char c)
+{
+	if (c == '1')
+		return (1);
+	if (c == '0')
+		return (2);
+	if (c == 'C')
+		return (3);
+	if (c == 'P')
+		return (4);
+	if (c == 'E')
+		return (5);
+	return (0);
+}
