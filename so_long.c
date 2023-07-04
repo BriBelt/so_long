@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/06/30 15:27:45 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:41:26 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,15 @@ void	so_long_exec(char **argv)
 	t_game	*game;
 
 	game = malloc(sizeof(t_game));
+	if (!game)
+		exit_error("Memory error");
 	game->map.mapname = argv[1];
-	map_format(game);
-	game->map.mapfd = open(game->map.mapname, O_RDONLY);
-	if (game->map.mapfd <= 0)
+	if (ft_map_checker(game))
+	{
+		printf("Map created successfully\n");
+		printf("rows: %i, cols: %i\n", game->map.rows, game->map.cols);
+		printf("player: %i, collectibles: %i, exit: %i\n", game->map.player, game->map.collectibles, game->map.exit);
+	}
+	else
 		exit_error("Non-valid map");
-	get_rows(game);
-	get_cols(game);
-	if (check_map(game->map.map))
-		printf("Valid map\n");
-//	printf("%i\n", game->map.rows);
-//	int i = 0;
-//	while (game->map.map[i])
-//	{
-//		printf("%s", game->map.map[i]);
-//		i++;
-//	}
 }

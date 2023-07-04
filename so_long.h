@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/06/30 15:26:00 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:07:39 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,23 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+/* Game objects */
 # define OPEN_SPACE '0'
 # define WALL '1'
 # define PLAYER 'P'
 # define EXIT 'E'
 # define COLLECTIBLE 'C'
 # define IMG_SIZE 64
+/* Game keywords */
+# define W
+# define UP 
+# define S
+# define DOWN 
+# define A
+# define LEFT
+# define D
+# define RIGHT 
+# define ESC 
 
 typedef struct	s_pos
 {
@@ -67,16 +78,16 @@ typedef struct	s_game
 void	so_long_exec(char **argv);
 /* Utils */
 //void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	map_format(t_game *game);
+int		map_format(char *name);
 void	exit_error(char *err);
 /* Check */
-int		check_map(char **map);
-int		accepted_chars(char c);
+int		ft_map_checker(t_game *game);
+int		check_map(char **map, t_game *game);
+int		check_walls(t_game *game);
+int		accepted_chars(char c, t_game *game);
 /* Map */
-void	get_rows(t_game *game);
-void	get_cols(t_game *game);
-//int		n_rows(t_game game);
-//int		n_cols(t_game game);
+int		get_rows(t_game *game);
+void	get_map_cols(t_game *game);
 /* GNL */
 char		*get_next_line(int fd);
 char		*ft_strjoin(char *s1, char *s2);
