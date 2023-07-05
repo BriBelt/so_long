@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/04 15:07:39 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:09:07 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,15 @@ typedef struct	s_pos
 
 typedef struct	s_map
 {
-	char	*mapname;
-	int		mapfd;
-	char	**map;
-	int		rows;
-	int		cols;
-	int		collectibles;
-	int		exit;
-	int		player;
-	t_pos	player_pos;	
-}			t_map;
+	char			*data;
+	int				rows;
+	int				cols;
+	int				collectibles;
+	int				exit;
+	int				player;
+	t_pos			player_pos;	
+	struct	s_map	*next;
+}					t_map;
 
 typedef struct	s_tiles
 {
@@ -70,21 +69,31 @@ typedef struct	s_game
 {
 	void	*conn;
 	void	*win;
-	t_map	map;
 	t_tiles	tiles;
 	int		moves;
 }			t_game;
 
 void	so_long_exec(char **argv);
-/* Utils */
+/* lst_utils */
+t_map	*create_row(char *row);
+void	insert_row(t_map **head, char *row);
+t_map 	*lstlast(t_map *map);
+int		mapsize(t_map *map);
+void	free_map(t_map **map);
+/* --- LIST(MAP) CREATION ---*/
+t_map	**create_map(char *mapfile);
+/* --- LIST CHECKING ---*/
+int		check_chars(t_map **map);
+int		accepted_chars(char c, t_map **map);
+int		check_walls(t_map **map);
+
 //void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		map_format(char *name);
 void	exit_error(char *err);
 /* Check */
-int		ft_map_checker(t_game *game);
-int		check_map(char **map, t_game *game);
-int		check_walls(t_game *game);
-int		accepted_chars(char c, t_game *game);
+//int		ft_map_checker(t_game *game);
+//int		check_map(char **map, t_game *game);
+//int		check_walls(t_game *game);
 /* Map */
 int		get_rows(t_game *game);
 void	get_map_cols(t_game *game);

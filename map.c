@@ -6,34 +6,46 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/04 16:16:19 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:07:38 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_map_checker(t_game *game)
-{
-	char	*name;
+/* --- LIST CREATION --- */
 
-	name = game->map.mapname;
-	game->map.mapfd = open(name, O_RDONLY);
-	if (game->map.mapfd <= 0 ||!map_format(name))
+/* Creates the map using linked lists, also modifies the
+ * number of rows that the map has. Uses map_format
+ * function to check if the file format is correct.
+ * Also checks if the file can be opened, if anything
+ * goes wrong, returns a 0. */
+t_map	**create_map(char *mapfile)
+{
+	t_map	**map;
+	char	*row;
+	int		fd;
+
+	if (!map_format(mapfile))
 		return (0);
-	game->map.rows = get_rows(game);
-	get_map_cols(game);
-	game->map.collectibles = 0;
-	game->map.exit = 0;
-	game->map.player = 0;
-	if (game->map.rows == 0 || game->map.cols == 0)
+	fd = open(mapfile, O_RDONLY);
+	if (fd <= 0)
 		return (0);
-	if (!check_map(game->map.map, game) ||!check_walls(game))
+	map = malloc(sizeof(t_map *));
+	if (!map)
 		return (0);
-	if (game->map.player != 1 || game->map.exit < 1)
-		return (0);
-	return (1);
+	*map = NULL;
+	row = get_next_line(fd);
+	while (row != NULL)
+	{
+		insert_row(map, row);
+		(*map)->rows++;
+		row = get_next_line(fd);
+	}
+	free(row);
+	return (map);
 }
 
+/* --- LIST CHECKING --- */
 /* Will check weather the file name is the correct format ".ber"
  * if not, returns a 0 */
 int	map_format(char *name)
@@ -60,83 +72,10 @@ int	map_format(char *name)
 	return (1);
 }
 
-/* Gets the number of rows that there is in the map's file counting
- * the times that it is possible to use the GNL function without
- * its result being NULL */
-int	get_rows(t_game *game)
-{
-	char	*read;
-	int		rowcount;
-
-	game->map.mapfd = open(game->map.mapname, O_RDONLY);
-	read = get_next_line(game->map.mapfd);
-	rowcount = 0;
-	while (read)
-	{
-		free(read);
-		rowcount++;
-		read = get_next_line(game->map.mapfd);
-	}
-	close(game->map.mapfd);
-	return (rowcount);
-}
-
-/* Will get the number of columns in the map, counting the length of
- * the string returned by the GNL function. It also adds those strings
- * as rows inside de array of strings "game->map.map". Sets the value
- * of game->map.cols automatically and creates the game->map.map. 
- * Returns nothing. */
-void	get_map_cols(t_game *game)
-{
-	int		i;
-
-	game->map.mapfd = open(game->map.mapname, O_RDONLY);
-	game->map.map = malloc(sizeof(char *) * (game->map.rows + 1));
-	if (!game->map.map)
-		exit_error("Memory error");
-	game->map.cols = 0;
-	i = 0;
-	while (i < game->map.rows)
-	{
-		game->map.map[i] = get_next_line(game->map.mapfd);
-		i++;
-	}
-	game->map.cols = ft_strlen(game->map.map[0]) - 1;
-	game->map.map[i] = NULL;
-	close(game->map.mapfd);
-}
-
-/* Checks if the map is rectangle/square shaped, also reads the whole
- * map, checking for the accepted characters (0, 1, P, E, C). Returns 
- * 0 if it found a character that is not accepted. */
-int	check_map(char **map, t_game *game)
-{
-	int	i;
-	int	j;
-	int	collen;
-
-	i = 0;
-	collen = ft_strlen(map[i]);
-	while (map[i])
-	{
-		if (collen != (int)ft_strlen(map[i]))
-			return (0);
-		j = 0;
-		while (map[i][j] && map[i][j] != '\n')
-		{
-			if (!accepted_chars(map[i][j], game))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-/* Modifies the value of the numbt_game *gameer of collectibles, 
+/* Modifies the value of the of collectibles, 
  * players and exits in the map, returns the corresponding number
  * if the passed character is a valid character for a map */
-int	accepted_chars(char c, t_game *game)
+int	accepted_chars(char c, t_map **map)
 {
 	if (c == '1')
 		return (1);
@@ -144,50 +83,87 @@ int	accepted_chars(char c, t_game *game)
 		return (2);
 	if (c == 'C')
 	{
-		game->map.collectibles++;
+		(*map)->collectibles++;
 		return (3);
 	}
 	if (c == 'P')
 	{
-		game->map.player++;
+		(*map)->player++;
 		return (4);
 	}
 	if (c == 'E')
 	{
-		game->map.exit++;
+		(*map)->exit++;
 		return (5);
 	}
 	return (0);
 }
 
-int	check_walls(t_game *game)
+/* Checks if the map is rectangle/square shaped, also reads the whole
+ * map, checking for the accepted characters (0, 1, P, E, C). Returns 
+ * 0 if it found a character that is not accepted. */
+int	check_chars(t_map **map)
 {
-	int		row;
-	int		col;
-	int 	times;
+	int		i;
+	size_t	collen;
+	t_map	*ptr;
 
-	row = 0;
+	i = 0;
+	ptr = *map;
+	collen = ft_strlen(ptr->data);
+	while (ptr)
+	{
+		if (collen != ft_strlen(ptr->data))
+			return (0);
+		i = 0;
+		while (ptr->data[i] && ptr->data[i]!= '\n')
+		{
+			if (!accepted_chars(ptr->data[i], map)) 
+				return (0);
+			i++;
+		}
+		ptr = ptr->next;
+	}
+	(*map)->cols = collen - 1;
+	return (1);
+}
+
+int	check_walls(t_map **map)
+{
+	t_map	*ptr;
+	int		times;
+	int		col;
+
 	times = 0;
+	col = 0;
+	ptr = *map;
 	while (times++ <= 2)
 	{
 		col = 0;
-		while (++col < game->map.cols - 1)
+		while (++col < (*map)->cols)
 		{
-			if (accepted_chars(game->map.map[row][col], game) != 1)
+			if (accepted_chars(ptr->data[col], map) != 1)
 				return (0);
 		}
-		row = game->map.rows - 1;
+		ptr = lstlast(ptr);
 	}
 	col = 0;
-	while (times++ <= 4)
+	times = 0;
+	while (times++ <= 2)
 	{
-		row = 0;
-		while (++row < game->map.rows)
+		ptr = *map;
+		while (ptr)
 		{
-			if (accepted_chars(game->map.map[row][col], game) != 1)
+			if (accepted_chars(ptr->data[col], map) != 1)
 				return (0);
+			ptr = ptr->next;
 		}
-		col = game->map.cols - 1;
+		col = (*map)->cols - 1;
 	}
 	return (1);
+}
+
+void	ft_flood_fill(t_map **map, int row, int col)
+{
+	
 }

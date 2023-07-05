@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/04 15:41:26 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:05:39 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@ int	main(int argc, char **argv)
 void	so_long_exec(char **argv)
 {
 	t_game	*game;
+	t_map	**map;
 
 	game = malloc(sizeof(t_game));
 	if (!game)
 		exit_error("Memory error");
-	game->map.mapname = argv[1];
-	if (ft_map_checker(game))
+	map = create_map(argv[1]);
+	if (!map)
+		exit_error("Could not create map");
+	if (!check_chars(map) || !check_walls(map) ||
+			(*map)->player != 1 || (*map)->exit != 1)
 	{
-		printf("Map created successfully\n");
-		printf("rows: %i, cols: %i\n", game->map.rows, game->map.cols);
-		printf("player: %i, collectibles: %i, exit: %i\n", game->map.player, game->map.collectibles, game->map.exit);
-	}
-	else
+		printf("Map created, rows: %i, cols: %i, players: %i, collect: %i, exit: %i\n",
+			(*map)->rows, (*map)->cols, (*map)->player, (*map)->collectibles, (*map)->exit); 
 		exit_error("Non-valid map");
+	}
+	free(game);
+	free_map(map);
 }
