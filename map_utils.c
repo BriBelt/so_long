@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:01:51 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/05 18:10:31 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:18:42 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,33 @@ int	accepted_chars(char c, t_map **map)
 		return (5);
 	}
 	return (0);
+}
+
+t_map	*get_row(t_map **map, int rownum)
+{
+	t_map	*ptr;
+	int		i;
+	
+	i = 0;
+	ptr = *map;
+	while (i < rownum)
+	{
+		ptr = ptr->next;
+		i++;
+	}
+	return (ptr);
+}
+
+/* Flood fill algorithm that will check from the player's position
+ * if both the collectibles and the exit are reachable for the player */
+void	ft_flood_fill(t_map *row, int rownum, int col)
+{
+	t_map	*drow;
+
+	drow = get_row(row, rownum);
+
+	ft_flood_fill(row, rownum - 1, col);
+	ft_flood_fill(row, rownum + 1, col);
+	ft_flood_fill(row, rownum, col - 1);
+	ft_flood_fill(row, rownum, col + 1);
 }
