@@ -6,11 +6,37 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:01:51 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/05 18:02:22 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:10:31 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+/* Will check weather the file name is the correct format ".ber"
+ * if not, returns a 0 */
+int	map_format(char *name)
+{
+	int		len;
+	int		i;
+	char	*format;
+
+	len = ft_strlen(name) - 4;
+	i = 0;
+	if (len <= 0)
+		return (0);
+	format = ".ber";
+	while (name[len])
+	{
+		if (name[len] == format[i])
+		{
+			len++;
+			i++;
+		}
+		else
+			return (0);
+	}
+	return (1);
+}
 
 /* Modifies the value of the of collectibles, 
  * players and exits in the map, returns the corresponding number
