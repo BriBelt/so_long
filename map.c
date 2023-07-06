@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/06 16:52:54 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:18:55 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_map	**create_map(char *mapfile)
 		(*map)->rows++;
 		row = get_next_line(fd);
 	}
+	close(fd);
 	free(row);
 	return (map);
 }
@@ -130,4 +131,17 @@ int	check_walls(t_map **map)
 		col = (*map)->cols - 1;
 	}
 	return (1);
+}
+
+char	*ft_dup(const char *s1)
+{
+	size_t	slen;
+	char	*str;
+
+	slen = ft_strlen(s1);
+	str = (char *) malloc(slen * sizeof(char));
+	if (!str)
+		return (0);
+	ft_strlcpy(str, s1, slen);
+	return (str);
 }

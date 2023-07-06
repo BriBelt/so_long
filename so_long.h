@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/06 16:46:29 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:16:11 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,12 @@ int		check_chars(t_map **map);
 void	set_positions(t_map **map, t_map *row, int col);
 int		check_walls(t_map **map);
 /* MAP_UTILS */
+char	**get_charmap(t_map **map);
 int		map_format(char *name);
 int		accepted_chars(char c, t_map **map);
 t_map	*get_row(t_map **map, int rownum);
+void	flood_fill(t_map **mapcopy, int rownum, int col);
+int		can_reach(char *mapfile, t_map **map);
 //void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	exit_error(char *err);
 /* GNL */
@@ -110,6 +113,7 @@ void		*ft_calloc(size_t count, size_t size);
 void		ft_bzero(void *s, size_t n);
 /* Split */
 char	**ft_split(char const *s, char c);
+char	*ft_dup(const char *s1);
 
 #endif
 #endif
