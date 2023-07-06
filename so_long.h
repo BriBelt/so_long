@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/05 17:09:07 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/06 16:46:29 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,21 @@
 
 typedef struct	s_pos
 {
-	int	x;
-	int	y;
+	int	row;
+	int	col;
 }		t_pos;
 
 typedef struct	s_map
 {
 	char			*data;
+	int				index;
 	int				rows;
 	int				cols;
 	int				collectibles;
 	int				exit;
 	int				player;
 	t_pos			player_pos;	
+	t_pos			exit_pos;	
 	struct	s_map	*next;
 }					t_map;
 
@@ -75,28 +77,24 @@ typedef struct	s_game
 
 void	so_long_exec(char **argv);
 /* lst_utils */
-t_map	*create_row(char *row);
-void	insert_row(t_map **head, char *row);
+t_map	*create_row(char *row, int rownum);
+void	insert_row(t_map **head, char *row, int rownum);
 t_map 	*lstlast(t_map *map);
 int		mapsize(t_map *map);
 void	free_map(t_map **map);
+/* MAP */
 /* --- LIST(MAP) CREATION ---*/
 t_map	**create_map(char *mapfile);
 /* --- LIST CHECKING ---*/
 int		check_chars(t_map **map);
-int		accepted_chars(char c, t_map **map);
+void	set_positions(t_map **map, t_map *row, int col);
 int		check_walls(t_map **map);
-
-//void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
+/* MAP_UTILS */
 int		map_format(char *name);
+int		accepted_chars(char c, t_map **map);
+t_map	*get_row(t_map **map, int rownum);
+//void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	exit_error(char *err);
-/* Check */
-//int		ft_map_checker(t_game *game);
-//int		check_map(char **map, t_game *game);
-//int		check_walls(t_game *game);
-/* Map */
-int		get_rows(t_game *game);
-void	get_map_cols(t_game *game);
 /* GNL */
 char		*get_next_line(int fd);
 char		*ft_strjoin(char *s1, char *s2);

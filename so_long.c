@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/05 18:05:39 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:23:31 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ void	so_long_exec(char **argv)
 		printf("Map created, rows: %i, cols: %i, players: %i, collect: %i, exit: %i\n",
 			(*map)->rows, (*map)->cols, (*map)->player, (*map)->collectibles, (*map)->exit); 
 		exit_error("Non-valid map");
+	}
+	t_map *ptr;
+
+	ptr = *map;
+	while (ptr)
+	{
+		printf("total rows: %i, total cols %i\n node: %i-- %s\n", ptr->rows, ptr->cols, ptr->index, ptr->data);
+		ptr = ptr->next;
 	}
 	free(game);
 	free_map(map);

@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/05 19:18:42 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/06 16:52:54 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_map	**create_map(char *mapfile)
 	t_map	**map;
 	char	*row;
 	int		fd;
+	int		rownum;
 
 	if (!map_format(mapfile))
 		return (0);
@@ -33,10 +34,12 @@ t_map	**create_map(char *mapfile)
 	if (!map)
 		return (0);
 	*map = NULL;
+	rownum = 0;
 	row = get_next_line(fd);
 	while (row != NULL)
 	{
-		insert_row(map, row);
+		insert_row(map, row, rownum);
+		rownum++;
 		(*map)->rows++;
 		row = get_next_line(fd);
 	}
@@ -66,6 +69,8 @@ int	check_chars(t_map **map)
 		{
 			if (!accepted_chars(ptr->data[i], map)) 
 				return (0);
+			if (ptr->data[i] == 'E' || ptr->data[i] == 'P')
+				set_positions(map, ptr, i);
 			i++;
 		}
 		ptr = ptr->next;
@@ -74,6 +79,24 @@ int	check_chars(t_map **map)
 	return (1);
 }
 
+void	set_positions(t_map **map, t_map *row, int col)
+{	
+	if (row->data[col] == 'P')
+	{
+		(*map)->player_pos.row = row->index;
+		(*map)->player_pos.col = col;
+//		printf("player is at [%i][%i]\n", (*map)->player_pos.row, (*map)->player_pos.col);
+	}
+	else if (row->data[col] == 'E')
+	{
+		(*map)->exit_pos.row = row->index;
+		(*map)->exit_pos.col = col;
+//		printf("exit is at [%i][%i]\n", (*map)->exit_pos.row, (*map)->exit_pos.col);
+	}
+}
+
+/* Checks if the map's walls, if correctly surrounded by walls
+ * returns 1, else returns 0. */
 int	check_walls(t_map **map)
 {
 	t_map	*ptr;
@@ -108,4 +131,3 @@ int	check_walls(t_map **map)
 	}
 	return (1);
 }
-

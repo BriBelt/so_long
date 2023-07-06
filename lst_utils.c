@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 16:03:36 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/05 16:08:30 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:10:39 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_map(t_map **map)
 }
 
 /* Creates nodes(row) for the map list. */
-t_map	*create_row(char *row)
+t_map	*create_row(char *row, int rownum)
 {
 	t_map	*new;
 
@@ -64,8 +64,9 @@ t_map	*create_row(char *row)
 		return (0);
 	new->data = row;
 	new->next = NULL;
-	new->rows = 0;
 	new->cols = 0;
+	new->rows = 0;
+	new->index = rownum;
 	new->collectibles = 0;
 	new->exit = 0;
 	new->player = 0;
@@ -73,12 +74,12 @@ t_map	*create_row(char *row)
 }
 
 /* Inserts a new node(row) into the map list. */
-void	insert_row(t_map **head, char *row)
+void	insert_row(t_map **head, char *row, int rownum)
 {
 	t_map	*ptr;
 	t_map	*node;
 
-	node = create_row(row);
+	node = create_row(row, rownum);
 	if (!node ||node == NULL)
 		return ;
 	if (*head == NULL)

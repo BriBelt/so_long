@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:01:51 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/05 19:18:42 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:21:56 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,28 +68,49 @@ int	accepted_chars(char c, t_map **map)
 t_map	*get_row(t_map **map, int rownum)
 {
 	t_map	*ptr;
-	int		i;
 	
-	i = 0;
 	ptr = *map;
-	while (i < rownum)
-	{
+	while (ptr->index < rownum)
 		ptr = ptr->next;
-		i++;
-	}
 	return (ptr);
 }
 
+void	flood_fill(t_map **map, int rownum, int col)
+{
+	t_map	*row;
+
+	row = get_row(map, rownum);
+	if ((rownum > (*map)->rows - 1 || rownum < 0) ||
+			(col > (*map)->cols - 1 || col < 0))
+		return ;
+
+}
+/*int	reachable(char *mapfile, t_map **map)
+{
+	t_map	**copy;
+
+	copy = create_map(mapfile);
+
+}*/
 /* Flood fill algorithm that will check from the player's position
  * if both the collectibles and the exit are reachable for the player */
-void	ft_flood_fill(t_map *row, int rownum, int col)
+/*void	flood_fill(t_map **map, int rownum, int col)
 {
-	t_map	*drow;
+	t_map	*row;
+	int		c;
+	int		e;
 
-	drow = get_row(row, rownum);
-
-	ft_flood_fill(row, rownum - 1, col);
-	ft_flood_fill(row, rownum + 1, col);
-	ft_flood_fill(row, rownum, col - 1);
-	ft_flood_fill(row, rownum, col + 1);
-}
+	c = 0;
+	e = 0;
+	row = get_row(map, rownum);
+	if ((rownum > (*map)->rows - 1 || rownum < 0) ||
+			(col > (*map)->cols - 1 || col < 0))
+		return ;
+	if (row[col] == 'X' || accepted_chars(row[col]) == 1)
+		return ;
+	if (row[col] == 'C')
+		c++;
+	if (row[col] == 'E')
+		e++;
+	if (e != (*map)->exit || c != (*map)->collectibles)
+}*/
