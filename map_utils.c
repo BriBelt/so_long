@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:01:51 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/06 19:16:38 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:26:40 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,95 +75,62 @@ t_map	*get_row(t_map **map, int rownum)
 	return (ptr);
 }
 
-/* Flood fill algorithm that will check from the player's position
- * if both the collectibles and the exit are reachable for the player */
-/*void	flood_fill(t_map **mapcopy, int rownum, int col)
-{
-	t_map	*row;
-
-	row = get_row(mapcopy, rownum);
-//	printf("ffrow: %s, rownum: %i, colnum: %i, maxrow: %i, maxcol: %i\n",
-//			row->data, rownum, col, (*mapcopy)->rows - 1, (*mapcopy)->cols - 1);
-	if ((rownum > (*mapcopy)->rows - 1 || rownum < 0) ||
-			(col > (*mapcopy)->cols - 1 || col < 0))
-	{
-//		printf("passes limits\n");
-		return ;
-	}
-	if (row->data[col] == '1')
-	{
-//		printf("reached a wall\n");
-		return ;
-	}
-	if (row->data[col] == 'C')
-		(*mapcopy)->collectibles++;
-	if (row->data[col] == 'E')
-		(*mapcopy)->exit++;
-	row->data[col] = 'X';
-	flood_fill(mapcopy, rownum - 1, col);
-	flood_fill(mapcopy, rownum + 1, col);
-	flood_fill(mapcopy, rownum, col - 1);
-	flood_fill(mapcopy, rownum, col + 1);
-}*/
-
 char	**get_charmap(t_map **map)
 {
 	char	**newmap;
 	t_map	*ptr;
 	int		i;
-	
+
 	i = 0;
-	newmap = malloc(sizeof(char *) * (*map)->rows);
+	newmap = ft_calloc((*map)->rows + 1, sizeof(char *));
 	if (!newmap)
 		return (0);
 	ptr = *map;
 	while (ptr)
 	{
 		newmap[i] = ft_dup(ptr->data);
-		i++;
 		ptr = ptr->next;
+		i++;
 	}
 	return (newmap);
 }
 
-/*void	flood_fill(char **mapcopy, int rownum, int col)
+/* Flood fill algorithm that will check from the player's position
+ * if both the collectibles and the exit are reachable for the player */
+void	flood_fill(char **map, t_pos size, int row, int col, int *total)
 {
-	if ((rownum > (*mapcopy)->rows - 1 || rownum < 0) ||
-			(col > (*mapcopy)->cols - 1 || col < 0))
-	{
-//		printf("passes limits\n");
+	if ((row >= size.row || row < 0) ||
+			(col >= size.col || col < 0))
 		return ;
-	}
-	if (row[col] == '1')
-	{
-//		printf("reached a wall\n");
+	if (map[row][col] == '1' ||map[row][col] == 'X')
 		return ;
-	}
-	if (row[col] == 'C')
-		(*mapcopy)->collectibles++;
-	if (row[col] == 'E')
-		(*mapcopy)->exit++;
-	row[col] = 'X';
-	flood_fill(mapcopy, rownum - 1, col);
-	flood_fill(mapcopy, rownum + 1, col);
-	flood_fill(mapcopy, rownum, col - 1);
-	flood_fill(mapcopy, rownum, col + 1);
+	if (map[row][col] == 'C')
+		(*total)++;
+	if (map[row][col] == 'E')
+		(*total)++;
+	map[row][col] = 'X';
+	flood_fill(map, size, row - 1, col, total);
+	flood_fill(map, size, row + 1, col, total);
+	flood_fill(map, size, row, col - 1, total);
+	flood_fill(map, size, row, col + 1, total);
 }
 
-int	can_reach(char *mapfile, t_map **map)
+int	can_reach(char **map, t_map **omap)
 {
-	t_map	**mapcopy;
+	int		total;
+	int		orgtotal;
+	t_pos	size;
+	int		pr;
+	int		pc;
 
-	mapcopy = create_map(mapfile);
-	if (!check_chars(mapcopy))
-		return (0);
-	(*mapcopy)->exit = 0;
-	(*mapcopy)->collectibles = 0;
-//	printf("player position row: %i, col: %i\n", (*mapcopy)->player_pos.row, (*mapcopy)->player_pos.col);
-	flood_fill(mapcopy, (*mapcopy)->player_pos.row,
-			(*mapcopy)->player_pos.col);
-	if ((*map)->exit != (*mapcopy)->exit ||
-			(*map)->collectibles != (*mapcopy)->collectibles)
+	total = 0;
+	orgtotal = (*omap)->collectibles + (*omap)->exit;
+	size.row = (*omap)->rows - 1;
+	size.col = (*omap)->cols - 1;
+	pr = (*omap)->player_pos.row;
+	pc = (*omap)->player_pos.col;
+	flood_fill(map, size, pr, pc, &total);
+	if (total != orgtotal)
 		return (0);
 	return (1);
-}*/
+}

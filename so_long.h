@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/06 19:16:11 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:28:32 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ char	**get_charmap(t_map **map);
 int		map_format(char *name);
 int		accepted_chars(char c, t_map **map);
 t_map	*get_row(t_map **map, int rownum);
-void	flood_fill(t_map **mapcopy, int rownum, int col);
-int		can_reach(char *mapfile, t_map **map);
+void	flood_fill(char **map, t_pos size, int row, int col, int *total);
+int		can_reach(char **map, t_map **omap);
 //void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	exit_error(char *err);
 /* GNL */

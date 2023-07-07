@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/06 19:18:55 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:28:27 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,11 @@ void	set_positions(t_map **map, t_map *row, int col)
 	{
 		(*map)->player_pos.row = row->index;
 		(*map)->player_pos.col = col;
-//		printf("player is at [%i][%i]\n", (*map)->player_pos.row, (*map)->player_pos.col);
 	}
 	else if (row->data[col] == 'E')
 	{
 		(*map)->exit_pos.row = row->index;
 		(*map)->exit_pos.col = col;
-//		printf("exit is at [%i][%i]\n", (*map)->exit_pos.row, (*map)->exit_pos.col);
 	}
 }
 
