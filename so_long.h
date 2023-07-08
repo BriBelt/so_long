@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/07 14:28:32 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:40:17 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SO_LONG_H
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 1 
-//# include <mlx.h>
+# include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -26,7 +26,7 @@
 # define PLAYER 'P'
 # define EXIT 'E'
 # define COLLECTIBLE 'C'
-# define IMG_SIZE 64
+# define IMG_SIZE 64 
 /* Game keywords */
 # define W
 # define UP 
@@ -91,13 +91,19 @@ void	set_positions(t_map **map, t_map *row, int col);
 int		check_walls(t_map **map);
 /* MAP_UTILS */
 char	**get_charmap(t_map **map);
-int		map_format(char *name);
+int		map_format(char *name, char *format);
 int		accepted_chars(char c, t_map **map);
 t_map	*get_row(t_map **map, int rownum);
 void	flood_fill(char **map, t_pos size, int row, int col, int *total);
 int		can_reach(char **map, t_map **omap);
 //void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	exit_error(char *err);
+/* CONNECTION */
+void	create_connection(t_map **map, t_game *game);
+/* GRAPHICS */
+//void	create_all_images(t_game *game);
+void	create_images(t_game *game);
+void	check_image(t_game *game, void **image, char *path);
 /* GNL */
 char		*get_next_line(int fd);
 char		*ft_strjoin(char *s1, char *s2);

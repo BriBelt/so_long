@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/07 13:58:39 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:00:14 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ int	main(int argc, char **argv)
 
 void	so_long_exec(char **argv)
 {
-	t_game	*game;
 	t_map	**map;
+	char	**newmap;
+	t_game	*game;
 
-	game = malloc(sizeof(t_game));
-	if (!game)
-		exit_error("Memory error");
 	map = create_map(argv[1]);
 	if (!map)
 		exit_error("Could not create map");
@@ -37,21 +35,12 @@ void	so_long_exec(char **argv)
 			(*map)->rows, (*map)->cols, (*map)->player, (*map)->collectibles, (*map)->exit); 
 		exit_error("Non-valid map");
 	}
-	printf("row num: %i\n", (*map)->rows);
-	char	**newmap;
-
 	newmap = get_charmap(map);
 	if (!can_reach(newmap, map))
-	{
-		printf("Non-reachable targets\n");
-		exit_error("Not valid");
-	}
-//	int	i = 0;
-//	while (newmap[i])
-//	{
-//		printf("%s", newmap[i]);
-//		i++;
-//	}
-	free(game);
+		exit_error("Non-reachable target");
+	game = malloc(sizeof(t_game));
+	if (!game)
+		exit_error("Memory error");
+	create_connection(map, game);
 	free_map(map);
 }

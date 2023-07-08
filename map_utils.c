@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:01:51 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/07 14:26:40 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/08 12:24:32 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 /* Will check weather the file name is the correct format ".ber"
  * if not, returns a 0 */
-int	map_format(char *name)
+int	map_format(char *name, char *format)
 {
 	int		len;
+	int		flen;
 	int		i;
-	char	*format;
 
-	len = ft_strlen(name) - 4;
+	flen = ft_strlen(format);
+	len = ft_strlen(name) - flen;
 	i = 0;
 	if (len <= 0)
 		return (0);
-	format = ".ber";
 	while (name[len])
 	{
 		if (name[len] == format[i])

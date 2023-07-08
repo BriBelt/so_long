@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/07 14:28:27 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/08 12:26:32 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_map	**create_map(char *mapfile)
 	int		fd;
 	int		rownum;
 
-	if (!map_format(mapfile))
+	if (!map_format(mapfile, ".ber"))
 		return (0);
 	fd = open(mapfile, O_RDONLY);
 	if (fd <= 0)
