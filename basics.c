@@ -12,10 +12,12 @@
 
 #include "so_long.h"
 
-void	create_connection(t_map **map, t_game *game)
+void	create_connection(t_map **map, t_game *
+		ame)
 {
 	game->conn = mlx_init();
-	game->win = mlx_new_window(game->conn, (*map)->cols * IMG_SIZE, (*map)->rows * IMG_SIZE, "so_long");
+	game->win = mlx_new_window(game->conn, (*map)->cols * IMG_SIZE,
+			(*map)->rows * IMG_SIZE, "so_long");
 	create_images(game);
 	mlx_loop(game->conn);
 }

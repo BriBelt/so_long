@@ -11,29 +11,60 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-void	create_images(t_game *game)
+void	cc_images(void *conn, void **image, char *path)
 {
 	int	width;
 	int	height;
 
-	game->tiles.floor = mlx_xpm_file_to_image(game->conn, "img/floor.xpm", &width, &height);
-	mlx_put_image_to_window(game->conn, game->win, game->tiles.floor, 0, 0);
-}
-
-void	check_image(t_game *game, void **image, char *path)
-{
-	int	width;
-	int	height;
-
-	*image = mlx_xpm_to_image(game->conn, &path, &width, &height);
+	*image = mlx_xpm_file_to_image(conn, path, &width, &height);
 	if (*image == NULL)
 		exit_error("Could not find the image");
 }
-/*void	create_all_images(t_game *game)
+
+void	set_img_ptr(t_game *game)
 {
-	game->tiles.floor = mlx_new_image(game->conn, IMG_SIZE, IMG_SIZE);
-	check_image(game, &game->tiles.floor, "./img/floor.xpm");
-//	check_image(game, &game->tiles.wall, "img/wall.xpm"); 
-//	check_image(game, &game->tiles.exit, "img/exit.xpm"); check_image(game, &game->tiles.collectible, "game_img/collectible.xpm"); 
-//	check_image(game, &game->tiles.player, "img/player.xpm");
-}*/
+	cc_images(game->conn, &game->tiles.floor, "img/floor.xpm");
+	cc_images(game->conn, &game->tiles.wall, "img/wall.xpm");
+	cc_images(game->conn, &game->tiles.collectible, "img/collectible.xpm");
+	cc_images(game->conn, &game->tiles.exit, "img/exit.xpm");
+}
+
+void	insert_tiles(t_game *game, char **map)
+{
+	int		r;
+	int		c;
+	void	*conn;
+	void	*win;
+	t_tiles	*tile;
+
+	r = 0;
+	c = 0;
+	conn = game->conn;
+	win = game->win;
+	set_img_ptr(game);
+	while (map[r])
+	{
+		while (map[r][c])
+		{
+			tile = which_tile(map[r][c], game);
+			mlx_put_image_to_window(conn, win, tile, r * IMG, c * IMG);
+			c++;
+		}
+		r++;
+	}
+}
+
+t_tiles	*which_tile(char c, t_game *game)
+{
+	if (c == OPEN_SPACE)
+		return (game->tiles.floor);
+	if (c == WALL)
+		return (game->tiles.wall);
+	if (c == EXIT)
+		return (game->tiles.exit);
+	if (c == PLAYER)
+		return (game->tiles.player);
+	if (c == COLLECTIBLE)
+		return (game->tiles.collectible);
+	return (NULL);
+}

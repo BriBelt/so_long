@@ -26,7 +26,7 @@
 # define PLAYER 'P'
 # define EXIT 'E'
 # define COLLECTIBLE 'C'
-# define IMG_SIZE 64 
+# define IMG 32 
 /* Game keywords */
 # define W
 # define UP 
@@ -101,9 +101,11 @@ void	exit_error(char *err);
 /* CONNECTION */
 void	create_connection(t_map **map, t_game *game);
 /* GRAPHICS */
-//void	create_all_images(t_game *game);
-void	create_images(t_game *game);
-void	check_image(t_game *game, void **image, char *path);
+void		cc_images(void *conn, void **image, char *path);
+void		set_img_ptr(t_game *game);
+/* tiles */
+void		insert_tiles(t_game *game, char **map);
+t_tiles		*which_tile(char c, t_game *game);
 /* GNL */
 char		*get_next_line(int fd);
 char		*ft_strjoin(char *s1, char *s2);
