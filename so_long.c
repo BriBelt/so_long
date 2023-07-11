@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/08 18:00:14 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:13:27 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	so_long_exec(char **argv)
 {
 	t_map	**map;
 	char	**newmap;
+	char	**checkmap;
 	t_game	*game;
 
 	map = create_map(argv[1]);
@@ -35,12 +36,13 @@ void	so_long_exec(char **argv)
 			(*map)->rows, (*map)->cols, (*map)->player, (*map)->collectibles, (*map)->exit); 
 		exit_error("Non-valid map");
 	}
-	newmap = get_charmap(map);
-	if (!can_reach(newmap, map))
+	checkmap = get_charmap(map);
+	if (!can_reach(checkmap, map))
 		exit_error("Non-reachable target");
 	game = malloc(sizeof(t_game));
 	if (!game)
 		exit_error("Memory error");
-	create_connection(map, game);
+	newmap = get_charmap(map);
+	create_connection(map, game, newmap);
 	free_map(map);
 }

@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/08 18:40:17 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/11 12:09:32 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,13 @@ int		can_reach(char **map, t_map **omap);
 //void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	exit_error(char *err);
 /* CONNECTION */
-void	create_connection(t_map **map, t_game *game);
+void	create_connection(t_map **map, t_game *game, char **cmap);
 /* GRAPHICS */
 void		cc_images(void *conn, void **image, char *path);
 void		set_img_ptr(t_game *game);
 /* tiles */
 void		insert_tiles(t_game *game, char **map);
+void		insert_others(char **map, t_game *game);
 t_tiles		*which_tile(char c, t_game *game);
 /* GNL */
 char		*get_next_line(int fd);
