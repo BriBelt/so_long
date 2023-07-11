@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:28:33 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/11 12:28:19 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:37:04 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	insert_tiles(t_game *game, char **map)
 	}
 }
 
-void	insert_others(char **map, t_game *game)
+void	insert_others(t_game *game, char **map)
 {
 	int		r;
 	int		c;

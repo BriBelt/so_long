@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:01:51 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/08 12:24:32 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/11 17:16:44 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,44 +93,4 @@ char	**get_charmap(t_map **map)
 		i++;
 	}
 	return (newmap);
-}
-
-/* Flood fill algorithm that will check from the player's position
- * if both the collectibles and the exit are reachable for the player */
-void	flood_fill(char **map, t_pos size, int row, int col, int *total)
-{
-	if ((row >= size.row || row < 0) ||
-			(col >= size.col || col < 0))
-		return ;
-	if (map[row][col] == '1' ||map[row][col] == 'X')
-		return ;
-	if (map[row][col] == 'C')
-		(*total)++;
-	if (map[row][col] == 'E')
-		(*total)++;
-	map[row][col] = 'X';
-	flood_fill(map, size, row - 1, col, total);
-	flood_fill(map, size, row + 1, col, total);
-	flood_fill(map, size, row, col - 1, total);
-	flood_fill(map, size, row, col + 1, total);
-}
-
-int	can_reach(char **map, t_map **omap)
-{
-	int		total;
-	int		orgtotal;
-	t_pos	size;
-	int		pr;
-	int		pc;
-
-	total = 0;
-	orgtotal = (*omap)->collectibles + (*omap)->exit;
-	size.row = (*omap)->rows - 1;
-	size.col = (*omap)->cols - 1;
-	pr = (*omap)->player_pos.row;
-	pc = (*omap)->player_pos.col;
-	flood_fill(map, size, pr, pc, &total);
-	if (total != orgtotal)
-		return (0);
-	return (1);
 }

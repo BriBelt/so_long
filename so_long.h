@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/11 12:09:32 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/11 17:13:10 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-
 /* Game objects */
 # define OPEN_SPACE '0'
 # define WALL '1'
@@ -55,8 +54,18 @@ typedef struct	s_map
 	int				player;
 	t_pos			player_pos;	
 	t_pos			exit_pos;	
-	struct	s_map	*next;
+	struct s_map	*next;
 }					t_map;
+
+typedef struct	s_cmap
+{
+	char	**fmap;
+	int		collectibles;
+	int		rows;
+	int		cols;
+	t_pos	player_pos;
+	t_pos	exit_pos;
+}				t_cmap;
 
 typedef struct	s_tiles
 {
@@ -73,9 +82,12 @@ typedef struct	s_game
 	void	*win;
 	t_tiles	tiles;
 	int		moves;
+	t_cmap	map;
 }			t_game;
 
 void	so_long_exec(char **argv);
+t_cmap	init_game_map(t_map **map);
+void	error_checker(t_map **map);
 /* lst_utils */
 t_map	*create_row(char *row, int rownum);
 void	insert_row(t_map **head, char *row, int rownum);
@@ -94,35 +106,37 @@ char	**get_charmap(t_map **map);
 int		map_format(char *name, char *format);
 int		accepted_chars(char c, t_map **map);
 t_map	*get_row(t_map **map, int rownum);
-void	flood_fill(char **map, t_pos size, int row, int col, int *total);
+void	flood_fill(char **map, t_pos size, int row, int col);
 int		can_reach(char **map, t_map **omap);
-//void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		count_totalfound(char **map);
 void	exit_error(char *err);
 /* CONNECTION */
-void	create_connection(t_map **map, t_game *game, char **cmap);
+void	create_connection(t_game *game);
+/*			 -- tiles --				*/
+void	insert_tiles(t_game *game, char **map);
+void	insert_others(t_game *game, char **map);
+t_tiles	*which_tile(char c, t_game *game);
 /* GRAPHICS */
-void		cc_images(void *conn, void **image, char *path);
-void		set_img_ptr(t_game *game);
-/* tiles */
-void		insert_tiles(t_game *game, char **map);
-void		insert_others(char **map, t_game *game);
-t_tiles		*which_tile(char c, t_game *game);
+void	cc_images(void *conn, void **image, char *path);
+void	set_img_ptr(t_game *game);
 /* GNL */
-char		*get_next_line(int fd);
-char		*ft_strjoin(char *s1, char *s2);
-size_t		ft_strlen(const char *str);
-char		*ft_strdup(const char *s1);
-size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
-size_t		ft_strlcat(char	*dst, const char *src, size_t siz);
-char		*ft_strchr(const char *str, int c);
-char		*ft_strtrim(char const *s1, char const *set);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strtrim(char const *s1, char const *set);
-void		*ft_calloc(size_t count, size_t size);
-void		ft_bzero(void *s, size_t n);
-/* Split */
+char	*get_next_line(int fd);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *s1);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcat(char	*dst, const char *src, size_t siz);
+char	*ft_strchr(const char *str, int c);
+char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strtrim(char const *s1, char const *set);
+void	*ft_calloc(size_t count, size_t size);
+void	ft_bzero(void *s, size_t n);
+/* 			-- Split ---		*/
 char	**ft_split(char const *s, char c);
+char	**ft_freearray(char	**arr);
 char	*ft_dup(const char *s1);
+/*			--- moves --- 		*/
 
 #endif
 #endif

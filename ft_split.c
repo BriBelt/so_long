@@ -6,13 +6,13 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:47:55 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/06/28 13:44:52 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:36:56 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static char	**ft_freearray(char	**arr)
+char	**ft_freearray(char	**arr)
 {
 	int	str_index;
 
