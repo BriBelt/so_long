@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/12 19:58:36 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:03:36 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	so_long_exec(char **argv)
 	if (!argv[1] || argv[1][0] == '\0')
 		exit_error("Empty mapfile.");
 	if (!map_format(argv[1], ".ber"))
-		exit_error("Error: Non-valid mapfile format.");
+		exit_error("Non-valid mapfile format.");
 	map = create_map(argv[1]);
 	error_checker(map);
 	game = malloc(sizeof(t_game));
