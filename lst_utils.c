@@ -6,13 +6,13 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 16:03:36 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/06 15:10:39 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:03:05 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_map *lstlast(t_map *map)
+t_map	*lstlast(t_map *map)
 {
 	if (!map)
 		return (0);
@@ -47,6 +47,7 @@ void	free_map(t_map **map)
 	{
 		aux = *map;
 		*map = (*map)->next;
+		free(aux->data);
 		free(aux);
 	}
 	free(map);
@@ -80,7 +81,7 @@ void	insert_row(t_map **head, char *row, int rownum)
 	t_map	*node;
 
 	node = create_row(row, rownum);
-	if (!node ||node == NULL)
+	if (!node || node == NULL)
 		return ;
 	if (*head == NULL)
 		*head = node;

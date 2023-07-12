@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:41:33 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/06/28 12:53:03 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:32:31 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,42 +110,3 @@ char	*get_next_line(int fd)
 	free(rawline);
 	return (newline);
 }
-/*
-int	main(void)
-{
-	int	fd;
-	char	*newline;
-
-	fd = open("only_three.txt", O_RDONLY);
-	while ((newline = get_next_line(fd)))
-	{
-		printf("%s\n", newline);
-		free(newline);
-	}
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	
-	fd = open("multiple_nl.txt", O_RDONLY);
-	newline = get_next_line(fd);
-	printf("\n1st --%s\n", newline);
-	free(newline);
-	newline = 0;
-	newline = get_next_line(fd);
-	printf("\n2nd --%s\n", newline);
-	free(newline);
-	newline = 0;
-	newline = get_next_line(fd);
-	printf("\n3rd --%s\n", newline);
-	free(newline);
-	newline = 0;
-	newline = get_next_line(fd);
-	printf("\n4th --%s\n", newline);
-	free(newline);
-	newline = 0;
-	newline = get_next_line(fd);
-	printf("\n5th --%s\n", newline);
-	
-	close(fd);
-	return (0);
-}*/

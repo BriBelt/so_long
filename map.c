@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/08 12:26:32 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:52:51 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ t_map	**create_map(char *mapfile)
 	int		fd;
 	int		rownum;
 
-	if (!map_format(mapfile, ".ber"))
-		return (0);
 	fd = open(mapfile, O_RDONLY);
 	if (fd <= 0)
 		return (0);
@@ -58,17 +56,18 @@ int	check_chars(t_map **map)
 	size_t	collen;
 	t_map	*ptr;
 
-	i = 0;
 	ptr = *map;
+	if (!ptr)
+		return (0);
 	collen = ft_strlen(ptr->data);
 	while (ptr)
 	{
 		if (collen != ft_strlen(ptr->data))
 			return (0);
 		i = 0;
-		while (ptr->data[i] && ptr->data[i]!= '\n')
+		while (ptr->data[i] && ptr->data[i] != '\n')
 		{
-			if (!accepted_chars(ptr->data[i], map)) 
+			if (!accepted_chars(ptr->data[i], map))
 				return (0);
 			if (ptr->data[i] == 'E' || ptr->data[i] == 'P')
 				set_positions(map, ptr, i);
@@ -103,7 +102,6 @@ int	check_walls(t_map **map)
 	int		col;
 
 	times = 0;
-	col = 0;
 	ptr = *map;
 	while (times++ <= 2)
 	{
@@ -115,8 +113,20 @@ int	check_walls(t_map **map)
 		}
 		ptr = lstlast(ptr);
 	}
-	col = 0;
+	if (!check_col(map))
+		return (0);
+	return (1);
+}
+
+int	check_col(t_map **map)
+{
+	t_map	*ptr;
+	int		times;
+	int		col;
+
 	times = 0;
+	ptr = *map;
+	col = 0;
 	while (times++ <= 2)
 	{
 		ptr = *map;
@@ -129,17 +139,4 @@ int	check_walls(t_map **map)
 		col = (*map)->cols - 1;
 	}
 	return (1);
-}
-
-char	*ft_dup(const char *s1)
-{
-	size_t	slen;
-	char	*str;
-
-	slen = ft_strlen(s1);
-	str = (char *) malloc(slen * sizeof(char));
-	if (!str)
-		return (0);
-	ft_strlcpy(str, s1, slen);
-	return (str);
 }

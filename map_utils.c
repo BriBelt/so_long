@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:01:51 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/11 17:16:44 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:21:10 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	accepted_chars(char c, t_map **map)
 t_map	*get_row(t_map **map, int rownum)
 {
 	t_map	*ptr;
-	
+
 	ptr = *map;
 	while (ptr->index < rownum)
 		ptr = ptr->next;
