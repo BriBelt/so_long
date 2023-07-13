@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 10:27:24 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:35:45 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	error_checker(t_map **map)
 void	check_images(char *imagepath)
 {
 	int	fd;
+
 	fd = open(imagepath, O_RDONLY);
 	if (fd <= 0)
 		exit_error("Could not find the image.");
