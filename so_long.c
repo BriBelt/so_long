@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 08:58:14 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:27:24 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,17 @@ void	error_checker(t_map **map)
 	if (!can_reach(check, map))
 		exit_error("All targets must be reachable.");
 	ft_freearray(check);
+	check_images("img/floor.xpm");
+	check_images("img/wall.xpm");
+	check_images("img/collectible.xpm");
+	check_images("img/exit.xpm");
+	check_images("img/s_player.xpm");
+}
+
+void	check_images(char *imagepath)
+{
+	int	fd;
+	fd = open(imagepath, O_RDONLY);
+	if (fd <= 0)
+		exit_error("Could not find the image.");
 }

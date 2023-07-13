@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 09:12:45 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:24:08 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_game
 void	so_long_exec(char **argv);
 t_cmap	init_game_map(t_map **map);
 void	error_checker(t_map **map);
+void	check_images(char *imagepath);
 /*			--- basic ---			*/
 void	create_connection(t_game *game);
 void	update_map(t_game *game, char **map);

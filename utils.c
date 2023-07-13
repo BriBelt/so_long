@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 10:54:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 09:00:25 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:27:42 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ void	cc_images(void *conn, void **image, char *path)
 
 	*image = mlx_xpm_file_to_image(conn, path, &width, &height);
 	if (*image == NULL)
-		exit_error("Could not find the image");
+		exit_error("Could not find the image.");
 }
