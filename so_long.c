@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/12 20:03:36 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 08:58:14 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	main(int argc, char **argv)
 {
 	if (argc == 2)
 		so_long_exec(argv);
-	exit_error("Please enter a valid mapfile.");
+	else
+		exit_error("Please enter a valid mapfile.");
 	return (0);
 }
 
@@ -37,7 +38,6 @@ void	so_long_exec(char **argv)
 	game->map = init_game_map(map);
 	game->moves = 0;
 	create_connection(game);
-	free_map(map);
 }
 
 t_cmap	init_game_map(t_map **map)

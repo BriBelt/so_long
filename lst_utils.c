@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 16:03:36 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/12 19:03:05 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 08:54:58 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	free_map(t_map **map)
 {
 	t_map	*aux;
 
+	if (!*map)
+		return ;
 	while (*map)
 	{
 		aux = *map;

@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/12 19:58:45 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:00:21 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,43 +109,43 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strchr(const char *str, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
-char	*ft_dup(const char *s1);
 /* 			--- lst_utils ---		*/
-t_map	*create_row(char *row, int rownum);
-void	insert_row(t_map **head, char *row, int rownum);
 t_map	*lstlast(t_map *map);
 int		mapsize(t_map *map);
 void	free_map(t_map **map);
+t_map	*create_row(char *row, int rownum);
+void	insert_row(t_map **head, char *row, int rownum);
 /* MAP */
-/* --- LIST(MAP) CREATION ---*/
+/* 			--- map ---		*/
 t_map	**create_map(char *mapfile);
 /* --- LIST CHECKING ---*/
 int		check_chars(t_map **map);
 void	set_positions(t_map **map, t_map *row, int col);
 int		check_walls(t_map **map);
 int		check_col(t_map **map);
-/* MAP_UTILS */
-char	**get_charmap(t_map **map);
+/* 			--- map_utils ---		*/
 int		map_format(char *name, char *format);
 int		accepted_chars(char c, t_map **map);
 t_map	*get_row(t_map **map, int rownum);
-void	exit_error(char *err);
-/*			 -- tiles --				*/
-void	put_base_map(t_game *game, char **map);
-void	insert_collectibles(t_game *game, char **map);
-void	insert_player(t_game *game, int r, int c);
-void	insert_exit(t_game *game);
-/* GRAPHICS */
-void	cc_images(void *conn, void **image, char *path);
-void	set_img_ptr(t_game *game);
-/* GNL */
+char	**get_charmap(t_map **map);
 /*			--- moves --- 		*/
 int		can_move(t_game *game, char **map, int r, int c);
 int		move_up_down(t_game *game, char **map, int keycode);
 int		move_left_right(t_game *game, char **map, int keycode);
 int		moving(int keycode, t_game *game);
+/*			 --- tiles ---				*/
+void	set_img_ptr(t_game *game);
+void	put_base_map(t_game *game, char **map);
+void	insert_collectibles(t_game *game, char **map);
+void	insert_exit(t_game *game);
+void	insert_player(t_game *game, int r, int c);
+/*			 --- utils ---				*/
+void	exit_error(char *err);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
+char	*ft_dup(const char *s1);
+void	cc_images(void *conn, void **image, char *path);
 /*		--- Ft_printf ---		*/
+int		ft_printf(const char *format, ...);
 # endif
 #endif

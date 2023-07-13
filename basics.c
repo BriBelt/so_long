@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:47:55 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/12 18:55:02 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:00:17 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	close_game(t_game *game, char *str)
 		ft_putstr_fd(str, 1);
 	mlx_destroy_window(game->conn, game->win);
 	ft_freearray(game->map.fmap);
-	system("leaks a.out");
 	exit(0);
 	return (0);
 }
