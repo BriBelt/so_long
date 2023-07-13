@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:28:27 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 08:58:26 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:12:37 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,20 @@ int	move_up_down(t_game *game, char **map, int keycode)
 	if (keycode == DOWN || keycode == S)
 	{
 		r++;
-		if (map[r][c] == WALL)
-			return (0);
-		if (!can_move(game, map, r, c))
+		if (map[r][c] == WALL || !can_move(game, map, r, c))
 			return (0);
 		map[r - 1][c] = OPEN_SPACE;
 	}
 	else if (keycode == UP || keycode == W)
 	{
 		r--;
-		if (map[r][c] == WALL)
-			return (0);
-		if (!can_move(game, map, r, c))
+		if (map[r][c] == WALL || !can_move(game, map, r, c))
 			return (0);
 		map[r + 1][c] = OPEN_SPACE;
 	}
-	printf("---%i steps---\n", game->moves);
+	ft_putstr_fd("Steps: ", 1);
+	ft_putnbr_fd(game->moves, 1);
+	ft_putstr_fd("\n", 1);
 	return (1);
 }
 
@@ -80,22 +78,20 @@ int	move_left_right(t_game *game, char **map, int keycode)
 	if (keycode == LEFT || keycode == A)
 	{
 		c--;
-		if (map[r][c] == WALL)
-			return (0);
-		if (!can_move(game, map, r, c))
+		if (map[r][c] == WALL || !can_move(game, map, r, c))
 			return (0);
 		map[r][c + 1] = OPEN_SPACE;
 	}
 	else if (keycode == RIGHT || keycode == D)
 	{
 		c++;
-		if (map[r][c] == WALL)
-			return (0);
-		if (!can_move(game, map, r, c))
+		if (map[r][c] == WALL || !can_move(game, map, r, c))
 			return (0);
 		map[r][c - 1] = OPEN_SPACE;
 	}
-	printf("---%i steps---\n", game->moves);
+	ft_putstr_fd("Steps: ", 1);
+	ft_putnbr_fd(game->moves, 1);
+	ft_putstr_fd("\n", 1);
 	return (1);
 }
 

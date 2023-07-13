@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 09:00:21 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:12:45 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int		map_format(char *name, char *format);
 int		accepted_chars(char c, t_map **map);
 t_map	*get_row(t_map **map, int rownum);
 char	**get_charmap(t_map **map);
+void	ft_putnbr_fd(int n, int fd);
 /*			--- moves --- 		*/
 int		can_move(t_game *game, char **map, int r, int c);
 int		move_up_down(t_game *game, char **map, int keycode);
@@ -145,7 +146,5 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 char	*ft_dup(const char *s1);
 void	cc_images(void *conn, void **image, char *path);
-/*		--- Ft_printf ---		*/
-int		ft_printf(const char *format, ...);
 # endif
 #endif
