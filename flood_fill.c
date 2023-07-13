@@ -56,7 +56,7 @@ int	count_totalfound(char **map)
 		c = 0;
 		while (map[r][c])
 		{
-			if (map[r][c] == 'C')
+			if (map[r][c] == COLLECTIBLE || map[r][c] == EXIT)
 				found++;
 			c++;
 		}
