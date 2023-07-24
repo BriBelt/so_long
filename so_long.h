@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/24 17:45:27 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/24 18:15:26 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 #  define EXIT 'E'
 #  define COLLECTIBLE 'C'
 #  define IMG 32 
+#  define ROW_MAX 42 
+#  define COL_MAX 80 
 /* Game keywords */
 #  define W 13
 #  define UP 126

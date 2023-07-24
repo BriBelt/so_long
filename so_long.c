@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/24 17:43:00 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/24 18:15:02 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	error_checker(t_map **map)
 		exit_error("Map must have accepted characters and be rectangular.");
 	if (!check_walls(map))
 		exit_error("Map must be rectangular and surrounded by walls.");
+	if ((*map)->cols > COL_MAX || (*map)->rows > ROW_MAX)
+		exit_error("The map is too big.");
 	if ((*map)->player != 1)
 		exit_error("There must be one player.");
 	if ((*map)->exit != 1)
