@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:16:02 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/12 18:47:56 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:41:07 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	flood_fill(char **map, t_pos size, int row, int col)
 	flood_fill(map, size, row, col + 1);
 }
 
+/* Will call both the flood_fill and the count_totalfound functions,
+ * if the result of the last function is not 0, it means that there's
+ * some non-reacheable characters, therefore, the map is non-valid. */
 int	can_reach(char **map, t_map **omap)
 {
 	t_pos	size;
@@ -43,6 +46,9 @@ int	can_reach(char **map, t_map **omap)
 	return (0);
 }
 
+/* This function will check all the characters inside the 
+ * flood-fill-modified map, it will return the number of 
+ * collectible and exit characters found inside the map. */
 int	count_totalfound(char **map)
 {
 	int	r;

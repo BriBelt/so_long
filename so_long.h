@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 10:24:08 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:45:27 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ typedef struct s_tiles
 	void	*wall;
 	void	*exit;
 	void	*collectible;
-	void	*player;
+	void	*w_player;
+	void	*s_player;
+	void	*d_player;
+	void	*a_player;
 }			t_tiles;
 
 typedef struct s_game
@@ -92,8 +95,9 @@ void	error_checker(t_map **map);
 void	check_images(char *imagepath);
 /*			--- basic ---			*/
 void	create_connection(t_game *game);
-void	update_map(t_game *game, char **map);
+void	update_map(t_game *game, int r, int c, int k);//, char **map);
 int		close_game(t_game *game, char *str);
+void	image_checker(void);
 /*			--- flood_fill ---			*/
 void	flood_fill(char **map, t_pos size, int row, int col);
 int		can_reach(char **map, t_map **omap);
@@ -140,7 +144,7 @@ void	set_img_ptr(t_game *game);
 void	put_base_map(t_game *game, char **map);
 void	insert_collectibles(t_game *game, char **map);
 void	insert_exit(t_game *game);
-void	insert_player(t_game *game, int r, int c);
+void	insert_player(t_game *game, int r, int c, int keycode);
 /*			 --- utils ---				*/
 void	exit_error(char *err);
 void	ft_putstr_fd(char *s, int fd);

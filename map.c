@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:04:49 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/12 19:52:51 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:37:52 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_map	**create_map(char *mapfile)
  * 0 if it found a character that is not accepted. */
 int	check_chars(t_map **map)
 {
-	int		i;
+	size_t	i;
 	size_t	collen;
 	t_map	*ptr;
 
@@ -62,10 +62,10 @@ int	check_chars(t_map **map)
 	collen = ft_strlen(ptr->data);
 	while (ptr)
 	{
-		if (collen != ft_strlen(ptr->data))
+		if (collen != ft_strlen(ptr->data) && ptr->next != NULL)
 			return (0);
 		i = 0;
-		while (ptr->data[i] && ptr->data[i] != '\n')
+		while (i < collen - 1 && ptr->data[i])
 		{
 			if (!accepted_chars(ptr->data[i], map))
 				return (0);

@@ -6,12 +6,13 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:03:26 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/13 10:35:45 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:43:00 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/* Just a simple main that calls the important function. */
 int	main(int argc, char **argv)
 {
 	if (argc == 2)
@@ -21,6 +22,14 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
+/* This is the important function, it will first create the two
+ * required structures (t_map, t_game), will check if the argv is valid
+ * along with its format (.ber), next, it will assign a value (the map)
+ * of a linked list to our t_map structure, which later will be passed
+ * to the error_checker function, if everything is correct with that map,
+ * we will initialize our t_game->map (char **) with the init_game function,
+ * and set the t_game->moves to 0. If everything is okay we will call the
+ * create_connection function. */
 void	so_long_exec(char **argv)
 {
 	t_map	**map;
@@ -40,6 +49,9 @@ void	so_long_exec(char **argv)
 	create_connection(game);
 }
 
+/* Will initialize the char **map structure with the
+ * previously obtained t_map structure (linked list) of the
+ * map. */
 t_cmap	init_game_map(t_map **map)
 {
 	t_cmap	newmap;
@@ -54,6 +66,7 @@ t_cmap	init_game_map(t_map **map)
 	return (newmap);
 }
 
+/* Checks for all possible errors before actually opening the window.*/
 void	error_checker(t_map **map)
 {
 	char	**check;
@@ -65,22 +78,19 @@ void	error_checker(t_map **map)
 	if (!check_walls(map))
 		exit_error("Map must be rectangular and surrounded by walls.");
 	if ((*map)->player != 1)
-		exit_error("There must be at least one player.");
+		exit_error("There must be one player.");
 	if ((*map)->exit != 1)
-		exit_error("There must be at least one exit.");
+		exit_error("There must be one exit.");
 	if ((*map)->collectibles < 1)
 		exit_error("There must be at least one collectible.");
 	check = get_charmap(map);
 	if (!can_reach(check, map))
 		exit_error("All targets must be reachable.");
 	ft_freearray(check);
-	check_images("img/floor.xpm");
-	check_images("img/wall.xpm");
-	check_images("img/collectible.xpm");
-	check_images("img/exit.xpm");
-	check_images("img/s_player.xpm");
+	image_checker();
 }
 
+/* Checks if the path of the tile image is valid, if not, exits the program. */
 void	check_images(char *imagepath)
 {
 	int	fd;
