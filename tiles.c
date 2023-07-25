@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:28:33 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/24 17:45:22 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:03:07 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	set_img_ptr(t_game *game)
 	cc_images(game->conn, &game->tiles.w_player, "img/w_player.xpm");
 	cc_images(game->conn, &game->tiles.a_player, "img/a_player.xpm");
 	cc_images(game->conn, &game->tiles.d_player, "img/d_player.xpm");
+	cc_images(game->conn, &game->tiles.board, "img/board.xpm");
 }
 
 /* Will first call the set_img_ptr to get the corresponding pointer

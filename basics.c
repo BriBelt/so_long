@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:47:55 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/24 17:48:53 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:59:38 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void	image_checker(void)
 	check_images("img/w_player.xpm");
 	check_images("img/d_player.xpm");
 	check_images("img/a_player.xpm");
+	check_images("img/board.xpm");
 }

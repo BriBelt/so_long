@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:10 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/24 18:15:26 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:35:09 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #  define PLAYER 'P'
 #  define EXIT 'E'
 #  define COLLECTIBLE 'C'
+/* Game sizes */
 #  define IMG 32 
 #  define ROW_MAX 42 
 #  define COL_MAX 80 
@@ -38,6 +39,11 @@
 #  define D 2
 #  define RIGHT 124
 #  define ESC 53
+/* Bonus */
+#  define COLOR 0xffffff
+#  ifndef BONUS
+#	define BONUS 0
+#endif
 
 typedef struct s_pos
 {
@@ -79,6 +85,7 @@ typedef struct s_tiles
 	void	*s_player;
 	void	*d_player;
 	void	*a_player;
+	void	*board;
 }			t_tiles;
 
 typedef struct s_game
@@ -116,6 +123,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strchr(const char *str, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
+char	*ft_itoa(int n);
 /* 			--- lst_utils ---		*/
 t_map	*lstlast(t_map *map);
 int		mapsize(t_map *map);
@@ -152,6 +160,11 @@ void	exit_error(char *err);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 char	*ft_dup(const char *s1);
+/*			 --- ft_steps ---				*/
+void	write_moves(t_game *game);
 void	cc_images(void *conn, void **image, char *path);
+/*			 --- bonus ---				*/
+void	bonus_place_steps(t_game *game);
+
 # endif
 #endif
