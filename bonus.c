@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 11:12:35 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/25 15:38:31 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/08/05 14:24:30 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,3 @@ void	bonus_place_steps(t_game *game)
 		free(moves);
 	}
 }
-
-/*void	bonus_enemies(t_game *game, char **map, int r, int c)
-{
-	if (BONUS)
-	{
-		if (map[r][c] == ENEMY)
-			close_game(game, "GAME OVER!");
-	} 
-}*/

@@ -6,7 +6,7 @@
 /*   By: bbeltran <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:28:27 by bbeltran          #+#    #+#             */
-/*   Updated: 2023/07/25 13:36:11 by bbeltran         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:11:02 by bbeltran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	can_move(t_game *game, char **map, int r, int c)
 		game->moves++;
 		game->map.collectibles--;
 	}
-	write_moves(game);
-	return (1);
+	return (write_moves(game), 1);
 }
 
 /* This function is in charge of moving the player up and down in the map.
@@ -74,10 +73,6 @@ int	move_up_down(t_game *game, char **map, int keycode)
 		map[r + 1][c] = OPEN_SPACE;
 		update_map(game, r + 1, c, keycode);
 	}
-//	ft_putstr_fd("Steps: ", 1);
-//	ft_putnbr_fd(game->moves, 1);
-//	ft_putstr_fd("\n", 1);
-//	bonus_place_steps(game);
 	return (1);
 }
 
