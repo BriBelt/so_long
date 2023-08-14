@@ -42,4 +42,4 @@ If you want to, you can try and create your own maps, you only have to create a 
 - Only one player, one exit and at least one collectible.
 
 ### 🐱 Textures 
-Thanks to [cup nooble](https://cupnooble.itch.io/sprout-lands-asset-pack) for creating the textures and making them available online.
+Credits to [cup nooble](https://cupnooble.itch.io/sprout-lands-asset-pack) for the cute textures.
