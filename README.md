@@ -8,8 +8,21 @@ graphical elements in general.
   Mac.
 
 ## Preview
-![ezgif com-video-to-gif](https://github.com/BriBelt/so_long/assets/114313875/45a1bcc5-d820-4c91-970a-6b51a5315ae9)
+![ezgif com-video-to-gif](https://github.com/BriBelt/so_long/assets/114313875/266c5ffd-85bb-47bf-95b7-e400f5802fda)
+
 
 ## How to run so_long
-``` git clone 
 ```
+git clone git@github.com:BriBelt/so_long.git
+cd so_long
+make / make bonus
+./so_long [map].ber
+```
+## How to play
+This game is pretty simple, the goal is to collect all collectibles on the map until the door appears and 
+you can exit.
+
+| Keyboard     | Action     |
+| :------------|:-----------|
+| W or ↑       | Up         |
+| S or ↓       | Down       |
